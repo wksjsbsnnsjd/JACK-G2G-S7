@@ -4,119 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G2G-S7 - محرك بايثون</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <style>
         body {
-            font-family: "Courier New", monospace;
-            background-color: #282828;
-            color: #f5f5f5;
+            font-family: "Arial", sans-serif;
+            background-color: #2d2d2d;
+            color: #ffffff;
             text-align: center;
-            padding: 50px;
-            background-image: url('https://path-to-your-anime-image.jpg'); /* صورة أنمي كخلفية */
-            background-size: cover;
-            background-position: center;
+            margin: 0;
+            padding: 0;
         }
         h1 {
-            font-size: 3rem;
             color: #66d9ef;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            margin: 20px;
         }
         .editor-container {
+            margin: 20px auto;
             width: 80%;
-            margin: 0 auto;
-            height: 400px;
-            background-color: rgba(39, 40, 34, 0.8);
-            border-radius: 8px;
+            max-width: 800px;
+            background: #272822;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+        #editor {
+            height: 400px;
+            border-radius: 10px;
+        }
         .output, .error {
-            width: 80%;
             margin: 20px auto;
+            width: 80%;
+            max-width: 800px;
             padding: 15px;
-            background-color: #3e3e3e;
             border-radius: 8px;
-            color: #f5f5f5;
+            background-color: #3e3e3e;
+            color: #ffffff;
+            white-space: pre-wrap;
         }
         .error {
             background-color: #ff5555;
         }
         button {
-            padding: 15px 30px;
+            margin: 10px;
+            padding: 10px 20px;
             font-size: 1.2rem;
             background-color: #66d9ef;
             border: none;
             border-radius: 5px;
-            color: white;
             cursor: pointer;
         }
         button:hover {
             background-color: #53c5d0;
         }
-        .header {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #66d9ef;
-            margin-bottom: 30px;
-        }
-        .anime-image {
-            width: 200px;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
-        #editor {
-            width: 100%;
-            height: 300px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
 </head>
 <body>
 
-    <div class="header">G2G-S7 - محرك بايثون</div>
-
-    <!-- إضافة صورة أنمي في الهيدر -->
-    <img src="https://path-to-your-anime-image.jpg" alt="Anime Image" class="anime-image">
-
-    <h1>اختبر أكواد بايثون هنا</h1>
+    <h1>G2G-S7 - محرر أكواد بايثون</h1>
 
     <div class="editor-container">
-        <div id="editor">{{ code }}</div>
+        <textarea id="editor">// اكتب كودك هنا</textarea>
     </div>
 
-    <form action="/" method="POST">
-        <input type="hidden" name="code" id="code">
-        <button type="submit">تشغيل الكود</button>
-        <button type="button" onclick="clearCode()">مسح الكود</button>
-    </form>
-
-    {% if output %}
-    <div class="output">
-        <h3>النتيجة:</h3>
-        <pre>{{ output }}</pre>
+    <div>
+        <button onclick="runCode()">تشغيل الكود</button>
+        <button onclick="clearEditor()">مسح الكود</button>
     </div>
-    {% endif %}
 
-    {% if error %}
-    <div class="error">
-        <h3>خطأ:</h3>
-        <pre>{{ error }}</pre>
-    </div>
-    {% endif %}
+    <div id="output" class="output" style="display: none;"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
     <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/python");
+        // تهيئة محرر CodeMirror
+        const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            lineNumbers: true,
+            mode: "python",
+            theme: "monokai"
+        });
 
-        // عند إرسال النموذج، أضف الكود إلى الحقل المخفي
-        document.querySelector('form').onsubmit = function() {
-            document.getElementById('code').value = editor.getValue();
-        };
+        // دالة تشغيل الكود
+        function runCode() {
+            const code = editor.getValue();
+            fetch("/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const outputDiv = document.getElementById("output");
+                if (data.status === "success") {
+                    outputDiv.style.display = "block";
+                    outputDiv.className = "output";
+                    outputDiv.textContent = `النتيجة:\n${data.output}`;
+                } else {
+                    outputDiv.style.display = "block";
+                    outputDiv.className = "error";
+                    outputDiv.textContent = `خطأ:\n${data.output}`;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
 
         // دالة لمسح الكود
-        function clearCode() {
-            editor.setValue('');
+        function clearEditor() {
+            editor.setValue("");
+            const outputDiv = document.getElementById("output");
+            outputDiv.style.display = "none";
         }
     </script>
 
