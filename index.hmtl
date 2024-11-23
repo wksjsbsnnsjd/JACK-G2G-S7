@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع محرك بايثون</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            background-color: #282828;
+            color: #f5f5f5;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #66d9ef;
+        }
+        .editor-container {
+            width: 80%;
+            margin: 0 auto;
+            height: 400px;
+            background-color: #272822;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .output, .error {
+            width: 80%;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #3e3e3e;
+            border-radius: 8px;
+            color: #f5f5f5;
+        }
+        .error {
+            background-color: #ff5555;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #66d9ef;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #53c5d0;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+</head>
+<body>
+
+    <h1>اختبر أكواد بايثون هنا</h1>
+
+    <div class="editor-container">
+        <div id="editor"></div>
+    </div>
+
+    <form action="/run_code" method="POST">
+        <input type="hidden" name="code" id="code">
+        <button type="submit">تشغيل الكود</button>
+    </form>
+
+    {% if output %}
+    <div class="output">
+        <h3>النتيجة:</h3>
+        <pre>{{ output }}</pre>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">
+        <h3>خطأ:</h3>
+        <pre>{{ error }}</pre>
+    </div>
+    {% endif %}
+
+    <script>
+        // إعداد محرر Ace
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");  // ثيم مشابه لبيئة بايثون
+        editor.session.setMode("ace/mode/python");
+        editor.setValue('# اكتب كود بايثون هنا...', -1);  // النص الافتراضي
+
+        // عند إرسال النموذج، أضف الكود إلى الحقل المخفي
+        document.querySelector('form').onsubmit = function() {
+            document.getElementById('code').value = editor.getValue();
+        };
+    </script>
+
+</body>
+</html>
