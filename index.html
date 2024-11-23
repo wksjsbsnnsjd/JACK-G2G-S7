@@ -3,66 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G2G-S7 - محرك بايثون</title>
+    <title>G2G-S7 - محرر أكواد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
     <style>
         body {
             font-family: "Arial", sans-serif;
-            background-color: #2d2d2d;
+            background: url('https://i.imgur.com/oZqYogN.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #ffffff;
-            text-align: center;
             margin: 0;
             padding: 0;
+            text-align: center;
         }
         h1 {
-            color: #66d9ef;
             margin: 20px;
+            font-size: 3rem;
+            color: #ff79c6;
+            text-shadow: 2px 2px 5px #000;
         }
         .editor-container {
             margin: 20px auto;
-            width: 80%;
-            max-width: 800px;
-            background: #272822;
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
         }
         #editor {
-            height: 400px;
+            height: 500px;
             border-radius: 10px;
         }
-        .output, .error {
+        .output {
             margin: 20px auto;
-            width: 80%;
-            max-width: 800px;
+            width: 90%;
+            max-width: 1000px;
             padding: 15px;
             border-radius: 8px;
-            background-color: #3e3e3e;
-            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #f8f8f2;
             white-space: pre-wrap;
+            font-size: 1.2rem;
         }
         .error {
-            background-color: #ff5555;
+            background-color: rgba(255, 69, 58, 0.9);
+            color: #fff;
         }
         button {
             margin: 10px;
             padding: 10px 20px;
             font-size: 1.2rem;
-            background-color: #66d9ef;
+            background: linear-gradient(45deg, #ff79c6, #bd93f9);
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         button:hover {
-            background-color: #53c5d0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
 <body>
-
-    <h1>G2G-S7 - محرر أكواد بايثون</h1>
+    <h1>G2G-S7 - محرر أكواد فخم</h1>
 
     <div class="editor-container">
-        <textarea id="editor">// اكتب كودك هنا</textarea>
+        <textarea id="editor">// اكتب الكود الخاص بك هنا</textarea>
     </div>
 
     <div>
@@ -74,12 +83,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/lint/lint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/lint/python-lint.min.js"></script>
     <script>
-        // تهيئة محرر CodeMirror
+        // إعداد محرر CodeMirror
         const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
             lineNumbers: true,
             mode: "python",
-            theme: "monokai"
+            theme: "dracula",
+            gutters: ["CodeMirror-lint-markers"],
+            lint: true
         });
 
         // دالة تشغيل الكود
@@ -99,20 +112,19 @@
                     outputDiv.textContent = `النتيجة:\n${data.output}`;
                 } else {
                     outputDiv.style.display = "block";
-                    outputDiv.className = "error";
+                    outputDiv.className = "output error";
                     outputDiv.textContent = `خطأ:\n${data.output}`;
                 }
             })
             .catch(error => console.error("Error:", error));
         }
 
-        // دالة لمسح الكود
+        // دالة مسح الكود
         function clearEditor() {
             editor.setValue("");
             const outputDiv = document.getElementById("output");
             outputDiv.style.display = "none";
         }
     </script>
-
 </body>
 </html>
