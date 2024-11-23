@@ -63,6 +63,13 @@
             margin-top: 20px;
             border-radius: 10px;
         }
+        /* محرر نصوص Ace */
+        #editor {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
 </head>
@@ -71,13 +78,14 @@
     <!-- إضافة اسم G2G-S7 في الأعلى -->
     <div class="header">G2G-S7 - محرك بايثون</div>
 
-    <!-- إضافة صورة أنمي -->
+    <!-- إضافة صورة أنمي في الهيدر -->
     <img src="https://path-to-your-anime-image.jpg" alt="Anime Image" class="anime-image">
 
     <h1>اختبر أكواد بايثون هنا</h1>
 
+    <!-- محرر نصوص (Ace Editor) -->
     <div class="editor-container">
-        <div id="editor"></div>
+        <div id="editor"># اكتب كود بايثون هنا...</div>
     </div>
 
     <form action="/run_code" method="POST">
