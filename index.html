@@ -11,16 +11,20 @@
             color: #f5f5f5;
             text-align: center;
             padding: 50px;
+            background-image: url('https://path-to-your-anime-image.jpg'); /* صورة أنمي كخلفية */
+            background-size: cover;
+            background-position: center;
         }
         h1 {
             font-size: 3rem;
             color: #66d9ef;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* إضافة تأثير ظل للنص */
         }
         .editor-container {
             width: 80%;
             margin: 0 auto;
             height: 400px;
-            background-color: #272822;
+            background-color: rgba(39, 40, 34, 0.8); /* إضافة شفافية للخلفية */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
@@ -53,6 +57,12 @@
             color: #66d9ef;
             margin-bottom: 30px;
         }
+        /* إضافة صورة أنمي في الهيدر */
+        .anime-image {
+            width: 200px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
 </head>
@@ -60,6 +70,9 @@
 
     <!-- إضافة اسم G2G-S7 في الأعلى -->
     <div class="header">G2G-S7 - محرك بايثون</div>
+
+    <!-- إضافة صورة أنمي -->
+    <img src="https://path-to-your-anime-image.jpg" alt="Anime Image" class="anime-image">
 
     <h1>اختبر أكواد بايثون هنا</h1>
 
