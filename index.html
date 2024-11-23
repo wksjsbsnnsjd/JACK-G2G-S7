@@ -1,25 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G2G-S7 - محرر أكواد</title>
+    <title>G2G-S7 - محرر Python</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
     <style>
         body {
             font-family: "Arial", sans-serif;
-            background: url('https://i.imgur.com/oZqYogN.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #ffffff;
             margin: 0;
             padding: 0;
+            color: #fff;
+            background: url('https://i.imgur.com/ThwRz6o.jpg') no-repeat center center fixed;
+            background-size: cover;
             text-align: center;
         }
         h1 {
             margin: 20px;
             font-size: 3rem;
-            color: #ff79c6;
+            color: #ffdd57;
             text-shadow: 2px 2px 5px #000;
         }
         .editor-container {
@@ -68,7 +69,7 @@
     </style>
 </head>
 <body>
-    <h1>G2G-S7 - محرر أكواد فخم</h1>
+    <h1>G2G-S7 - محرر Python فخم</h1>
 
     <div class="editor-container">
         <textarea id="editor">// اكتب الكود الخاص بك هنا</textarea>
@@ -83,16 +84,12 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/lint/lint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/lint/python-lint.min.js"></script>
     <script>
         // إعداد محرر CodeMirror
         const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
             lineNumbers: true,
             mode: "python",
-            theme: "dracula",
-            gutters: ["CodeMirror-lint-markers"],
-            lint: true
+            theme: "dracula"
         });
 
         // دالة تشغيل الكود
