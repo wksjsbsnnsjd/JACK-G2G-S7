@@ -18,13 +18,13 @@
         h1 {
             font-size: 3rem;
             color: #66d9ef;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* إضافة تأثير ظل للنص */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
         .editor-container {
             width: 80%;
             margin: 0 auto;
             height: 400px;
-            background-color: rgba(39, 40, 34, 0.8); /* إضافة شفافية للخلفية */
+            background-color: rgba(39, 40, 34, 0.8);
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
@@ -57,13 +57,11 @@
             color: #66d9ef;
             margin-bottom: 30px;
         }
-        /* إضافة صورة أنمي في الهيدر */
         .anime-image {
             width: 200px;
             margin-top: 20px;
             border-radius: 10px;
         }
-        /* محرر نصوص Ace */
         #editor {
             width: 100%;
             height: 300px;
@@ -75,7 +73,6 @@
 </head>
 <body>
 
-    <!-- إضافة اسم G2G-S7 في الأعلى -->
     <div class="header">G2G-S7 - محرك بايثون</div>
 
     <!-- إضافة صورة أنمي في الهيدر -->
@@ -83,14 +80,14 @@
 
     <h1>اختبر أكواد بايثون هنا</h1>
 
-    <!-- محرر نصوص (Ace Editor) -->
     <div class="editor-container">
-        <div id="editor"># اكتب كود بايثون هنا...</div>
+        <div id="editor">{{ code }}</div>
     </div>
 
     <form action="/" method="POST">
         <input type="hidden" name="code" id="code">
         <button type="submit">تشغيل الكود</button>
+        <button type="button" onclick="clearCode()">مسح الكود</button>
     </form>
 
     {% if output %}
@@ -108,16 +105,19 @@
     {% endif %}
 
     <script>
-        // إعداد محرر Ace
         var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");  // ثيم مشابه لبيئة بايثون
+        editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/python");
-        editor.setValue('# اكتب كود بايثون هنا...', -1);  // النص الافتراضي
 
         // عند إرسال النموذج، أضف الكود إلى الحقل المخفي
         document.querySelector('form').onsubmit = function() {
             document.getElementById('code').value = editor.getValue();
         };
+
+        // دالة لمسح الكود
+        function clearCode() {
+            editor.setValue('');
+        }
     </script>
 
 </body>
